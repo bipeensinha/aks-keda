@@ -1,0 +1,23 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-deployment
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx-deployment
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        env:
+        - name: SERVICEBUS_CONNECTIONSTRING # should use Secret
+          value: "Endpoint=sb://servicebus-keda-bipeen-01.servicebus.windows.net/;SharedAccessKeyName=keda-aks-01;SharedAccessKey=c4oiUFBM+WJ3YgwEwADEk87rHR+O6u/O2+ASbIO/sfo=;EntityPath=my-queue" # to be replaced
